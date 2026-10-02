@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SPA Navigation Simulator</title>
+  <meta name="description" content="A Single Page Application simulation built with vanilla HTML, CSS, and JavaScript using the HTML5 History API." />
+  <link rel="stylesheet" href="style.css" />
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Announcement / Status Bar -->
+  <header class="navbar-wrapper">
+    <div class="container nav-container">
+      <a href="/" class="brand" data-link>
+        <span class="brand-icon">⚡</span>
+        <span class="brand-text">SPA <span class="highlight">Navigator</span></span>
+      </a>
+
+      <!-- Mobile Menu Toggle Button -->
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+
+      <!-- Main Navigation Menu -->
+      <nav class="nav-menu" id="navMenu">
+        <ul class="nav-links">
+          <li><a href="/" class="nav-link" data-link>Home</a></li>
+          <li><a href="/about" class="nav-link" data-link>About</a></li>
+          <li><a href="/services" class="nav-link" data-link>Services</a></li>
+          <li><a href="/contact" class="nav-link" data-link>Contact</a></li>
+        </ul>
+        <div class="nav-badge">
+          <span class="dot"></span>
+          <span>No Reloads</span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Interactive Browser Simulation Bar -->
+  <section class="simulator-bar-section">
+    <div class="container">
+      <div class="browser-chrome">
+        <div class="browser-controls">
+          <button id="btnBack" class="btn-browser" title="Browser Back (history.back())">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          </button>
+          <button id="btnForward" class="btn-browser" title="Browser Forward (history.forward())">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </button>
+          <button id="btnReload" class="btn-browser" title="Soft Refresh Route">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+          </button>
+        </div>
+
+        <!-- Simulated Address Bar with Direct Path Test Input -->
+        <form id="urlForm" class="address-bar-form">
+          <span class="protocol">https://spa-simulator.local</span>
+          <input type="text" id="addressInput" class="address-input" value="/" placeholder="/path (e.g. /about or /random-404)" />
+          <button type="submit" class="btn-go" title="Test Route Navigation">Go</button>
+        </form>
+
+        <div class="history-metrics">
+          <span class="metric-label">History API:</span>
+          <span class="badge" id="historyStateBadge">pushState ready</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dynamic Content Viewport -->
+  <main class="main-content">
+    <div class="container">
+      <div id="app" class="content-viewport" aria-live="polite">
+        <!-- Content will be injected here dynamically by script.js -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Technical Explanation Info Drawer / Panel -->
+  <section class="info-section">
+    <div class="container">
+      <div class="info-card">
+        <div class="info-header">
+          <h3>💡 How This SPA Simulation Works</h3>
+          <span class="tag">HTML5 History API</span>
+        </div>
+        <div class="info-grid">
+          <div class="info-item">
+            <div class="step-num">1</div>
+            <div>
+              <strong>Intercept Clicks:</strong> Links have <code>data-link</code>. When clicked, <code>e.preventDefault()</code> cancels the page reload.
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="step-num">2</div>
+            <div>
+              <strong>Update URL:</strong> <code>history.pushState(null, null, path)</code> alters the browser address without sending a server request.
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="step-num">3</div>
+            <div>
+              <strong>Render View:</strong> JavaScript router matches the route and injects the corresponding HTML template into <code>&lt;main id="app"&gt;</code>.
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="step-num">4</div>
+            <div>
+              <strong>Back/Forward:</strong> The <code>window.onpopstate</code> listener automatically detects browser navigation and renders the previous view.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 SPA Navigation Simulator. Built with vanilla HTML, CSS, &amp; JavaScript.</p>
+      <div class="footer-links">
+        <a href="/" data-link>Home</a>
+        <a href="/about" data-link>About</a>
+        <a href="/services" data-link>Services</a>
+        <a href="/contact" data-link>Contact</a>
+        <a href="/test-404" data-link class="test-link">Test 404 Route</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
